@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest test",
     "test:dev": "jest test --watch",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "lint": "eslint src test"
   },
   "author": "Marcos Luis Delgado",
   "license": "MIT",

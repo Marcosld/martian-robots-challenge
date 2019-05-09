@@ -2,7 +2,7 @@ const {
   R,
   L,
   F
-} = require('../src/movements')
+} = require('../src/actions')
 
 describe('movement R', () => {
   test('should return the robots next direction updated', () => {

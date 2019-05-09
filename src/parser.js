@@ -1,4 +1,4 @@
-const isPositionLine = lineNumber => lineNumber % 2 === 0
+const parseActions = line => line.split('')
 
 const parsePosition = line => {
   const data = line.split(' ')
@@ -7,24 +7,26 @@ const parsePosition = line => {
   return { x, y, dir }
 }
 
-const parseMovements = line => line.split('')
+const parseRobot = (positionLine, actionsLine) =>
+  ({ position: parsePosition(positionLine), actions: parseActions(actionsLine) })
+
+const isRobotStartingLine = lineNumber => lineNumber % 2 === 0
+
+const buildRobots = lines =>
+  lines.reduce((builtRobots, line, i) =>
+    isRobotStartingLine(i) ? builtRobots.concat(parseRobot(line, lines[i + 1])) : builtRobots
+  , [])
+
+const buildBoard = line => {
+  const [ topX, topY ] = line.split(' ').map(numString => parseInt(numString))
+  return { topX, topY, safePlaces: [] }
+}
 
 function parse(input) {
   const lines = input.split('\n')
-  const [ topX, topY ] = lines[0].split(' ').map(numString => parseInt(numString))
-  const robots = lines.slice(1).reduce((pRobots, line, i, actualLines) =>
-    isPositionLine(i)
-      ? pRobots.concat({ position: parsePosition(line), movements: parseMovements(actualLines[i + 1]) })
-      : pRobots
-  , [])
-  return {
-    board: {
-      topX,
-      topY,
-      safePlaces: []
-    },
-    robots
-  }
+  const board = buildBoard(lines[0])
+  const robots = buildRobots(lines.slice(1))
+  return { board, robots }
 }
 
 module.exports = {

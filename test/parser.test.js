@@ -29,18 +29,18 @@ test('Should be able to produce robots position from input', () => {
     }))
 })
 
-test('Should be able to produce robots movements from input', () => {
+test('Should be able to produce robots actions from input', () => {
   expect(parse(exampleInput))
     .toEqual(expect.objectContaining({
       robots: expect.arrayContaining([
         expect.objectContaining({
-          movements: 'RFRFRFRF'.split('')
+          actions: 'RFRFRFRF'.split('')
         }),
         expect.objectContaining({
-          movements: 'FRRFLLFFRRFLL'.split('')
+          actions: 'FRRFLLFFRRFLL'.split('')
         }),
         expect.objectContaining({
-          movements: 'LLFFFLFLFL'.split('')
+          actions: 'LLFFFLFLFL'.split('')
         })
       ])
     }))
