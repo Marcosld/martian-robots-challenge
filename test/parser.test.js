@@ -1,5 +1,5 @@
 const { parse } = require('../src/parser')
-const { exampleInput } = require('./fixtures/exampleInput')
+const exampleInput = '5 3\n1 1 E\nRFRFRFRF\n3 2 N\nFRRFLLFFRRFLL\n0 3 W\nLLFFFLFLFL'
 
 test('Should be able to produce a board from input', () => {
   expect(parse(exampleInput))

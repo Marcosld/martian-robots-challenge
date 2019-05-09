@@ -1,24 +1,24 @@
-const { isSamePosition, getRobotPosition } = require('../utils')
+const { isSamePosition } = require('../utils')
 
-const addScentToBoard = (board, robot) =>
-  ({ ...board, safePlaces: board.safePlaces.concat(getRobotPosition(robot)) })
+const addScentToBoard = (board, { x, y }) =>
+  ({ ...board, safePlaces: board.safePlaces.concat({ x, y }) })
 
-const addFallenStatus = (nextPosition) =>
-  ({ ...nextPosition, isFallen: true })
+const addFallenStatus = position =>
+  ({ ...position, isFallen: true })
 
-const isRobotInASafePlace = (board, robot) =>
-  board.safePlaces.find(isSamePosition(getRobotPosition(robot)))
+const isASafePosition = (board, position) =>
+  board.safePlaces.find(isSamePosition(position))
 
-const applyFallEffect = (board, robot, nextPosition) =>
-  isRobotInASafePlace(board, robot)
-    ? { board, robot, nextPosition: getRobotPosition(robot) }
-    : { board: addScentToBoard(board, robot), robot, nextPosition: addFallenStatus(nextPosition) }
+const applyFallEffect = (board, nextPosition) =>
+  isASafePosition(board, nextPosition)
+    ? { board, nextPosition }
+    : { board: addScentToBoard(board, nextPosition), nextPosition: addFallenStatus(nextPosition) }
 
 const isFallingPosition = ({ topX, topY }, { x, y }) =>
   x > topX || y > topY || x < 0 || y < 0
 
-const apply = (board, robot, nextPosition) =>
-  isFallingPosition(board, nextPosition) ? applyFallEffect(board, robot, nextPosition) : { board, robot, nextPosition }
+const apply = (board, lastPosition, nextPosition) =>
+  isFallingPosition(board, nextPosition) ? applyFallEffect(board, lastPosition) : { board, nextPosition }
 
 module.exports = {
   isFallingPosition,
