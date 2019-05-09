@@ -23,7 +23,7 @@ const buildBoard = line => {
 }
 
 function parse(input) {
-  const lines = input.split('\n')
+  const lines = input.split('\n').filter(line => line !== '')
   const board = buildBoard(lines[0])
   const robots = buildRobots(lines.slice(1))
   return { board, robots }
