@@ -1,12 +1,11 @@
 {
   "name": "martian-robots",
   "version": "1.0.0",
-  "description": "Code challenge for GuideSmiths position",
+  "description": "Martian Robots code challenge",
   "main": "src/index.js",
   "scripts": {
     "test": "jest test",
     "test:dev": "jest test --watch",
-    "start": "node src/index.js",
     "lint": "eslint src test"
   },
   "author": "Marcos Luis Delgado",
