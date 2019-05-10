@@ -28,6 +28,19 @@ If you want to run the tests over different I/O files, you can simply change
 [sampleInput](./test/fixtures/sampleInput.txt) and 
 [sampleOutput](./test/fixtures/sampleOutput.txt) files.
 
+## Adding additional commands
+
+Commands are coded in the folder [actions](./src/actions). If you want to add a new command you can just create a new
+file (or use the existing ones if they fit). The input should be a position (```{ x, y, dir }```), and it should output
+the next position.
+
+Finally, export the command you have created in [the actions file](./src/actions/index.js) giving it the same name 
+that it would have in the input file.
+
+I have coded the solution based on one *action* per *time tick*, but multiple *effects* could occur. Effects, as *fall*
+are in the [effects](./src/effects) folder. If multiple effects existed they could be piped one after another without
+making too many changes.
+
 ## Problem description
 
 The surface of Mars can be modelled by a rectangular grid around which robots are able to move according to instructions provided from Earth. You are to write a program that determines each sequence of robot positions and reports the final position of the robot.
