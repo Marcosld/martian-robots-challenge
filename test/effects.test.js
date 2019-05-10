@@ -1,67 +1,67 @@
 const { fall } = require('../src/effects')
 
 describe('fall', () => {
-  test('should keep nextPosition if it doesnt fall', () => {
+  test('should keep position if it doesnt fall', () => {
     const actual = {
-      board: { topX: 2, topY: 2, safePlaces: [] },
-      position: { x: 2, y: 1 },
-      nextPosition: { x: 2, y: 2 }
+      world: { topX: 2, topY: 2, safePlaces: [] },
+      lastPosition: { x: 2, y: 1 },
+      position: { x: 2, y: 2 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        nextPosition: expect.objectContaining({
+        position: expect.objectContaining({
           x: 2, y: 2
         })
       }))
   })
-  test('should revert nextPosition if it falls', () => {
+  test('should revert position if it falls', () => {
     const actual = {
-      board: { topX: 2, topY: 2, safePlaces: [] },
-      position: { x: 2, y: 2 },
-      nextPosition: { x: 2, y: 3 }
+      world: { topX: 2, topY: 2, safePlaces: [] },
+      lastPosition: { x: 2, y: 2 },
+      position: { x: 2, y: 3 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        nextPosition: expect.objectContaining({
+        position: expect.objectContaining({
           x: 2, y: 2, isFallen: true
         })
       }))
   })
-  test('should keep nextPosition if it would fall but we are in a safe place', () => {
+  test('should keep position if it would fall but we are in a safe place', () => {
     const actual = {
-      board: { topX: 2, topY: 2, safePlaces: [ { x: 2, y: 1 } ] },
-      position: { x: 2, y: 1 },
-      nextPosition: { x: 2, y: 3 }
+      world: { topX: 2, topY: 2, safePlaces: [ { x: 2, y: 1 } ] },
+      lastPosition: { x: 2, y: 1 },
+      position: { x: 2, y: 3 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        nextPosition: expect.objectContaining({
+        position: expect.objectContaining({
           x: 2, y: 1
         })
       }))
   })
-  test('should keep the same board if robot doesnt fall', () => {
+  test('should keep the same world if robot doesnt fall', () => {
     const actual = {
-      board: { topX: 2, topY: 2, safePlaces: [] },
-      position: { x: 1, y: 1 },
-      nextPosition: { x: 0, y: 1 }
+      world: { topX: 2, topY: 2, safePlaces: [] },
+      lastPosition: { x: 1, y: 1 },
+      position: { x: 0, y: 1 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        board: expect.objectContaining({
+        world: expect.objectContaining({
           safePlaces: []
         })
       }))
   })
-  test('should update board safe places if robot falls', () => {
+  test('should update world safe places if robot falls', () => {
     const actual = {
-      board: { topX: 1, topY: 2, safePlaces: [ { x: 1, y: 1 } ] },
-      position: { x: 0, y: 1 },
-      nextPosition: { x: -1, y: 1 }
+      world: { topX: 1, topY: 2, safePlaces: [ { x: 1, y: 1 } ] },
+      lastPosition: { x: 0, y: 1 },
+      position: { x: -1, y: 1 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        board: expect.objectContaining({
+        world: expect.objectContaining({
           safePlaces: expect.arrayContaining([
             expect.objectContaining({ x: 0, y: 1 }),
             expect.objectContaining({ x: 1, y: 1 })
@@ -69,15 +69,15 @@ describe('fall', () => {
         })
       }))
   })
-  test('should not add a new board safe place if it already existed', () => {
+  test('should not add a new world safe place if it already existed', () => {
     const actual = {
-      board: { topX: 1, topY: 2, safePlaces: [ { x: 0, y: 1 } ] },
-      position: { x: 0, y: 1 },
-      nextPosition: { x: -1, y: 1 }
+      world: { topX: 1, topY: 2, safePlaces: [ { x: 0, y: 1 } ] },
+      lastPosition: { x: 0, y: 1 },
+      position: { x: -1, y: 1 }
     }
-    expect(fall(actual.board, actual.position, actual.nextPosition))
+    expect(fall(actual.world, actual.lastPosition, actual.position))
       .toEqual(expect.objectContaining({
-        board: expect.objectContaining({
+        world: expect.objectContaining({
           safePlaces: [
             expect.objectContaining({ x: 0, y: 1 })
           ]

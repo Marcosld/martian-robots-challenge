@@ -2,13 +2,16 @@ const { parse } = require('../src/parser')
 const { executeInstructions } = require('../src/executor')
 const { positionToLine } = require('../src/reporter')
 
-const getActualBoard = (startingBoard, lastState) => lastState ? lastState.board : startingBoard
+const getActualWorld = (startingWorld, [lastState]) => lastState ? lastState.world : startingWorld
 
 function processInput(input) {
-  const { board, robots } = parse(input)
-  return robots
-    .reduce((finalStates, robot) =>
-      finalStates.concat(executeInstructions(getActualBoard(board, finalStates.slice(-1)[0]), robot))
+  const { world, robots } = parse(input)
+  return robots // Recursive solution was uglier :/
+    .reduce((executedRobots, robot) =>
+      executedRobots.concat(executeInstructions(
+        getActualWorld(world, executedRobots.slice(-1)),
+        robot
+      ))
     , [])
     .map(({ position }) => positionToLine(position))
     .join('\n')

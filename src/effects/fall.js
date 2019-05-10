@@ -1,24 +1,25 @@
-const { isSamePosition } = require('../utils')
+const isSamePosition = ({ x, y }) => position =>
+  position.x === x && position.y === y
 
-const addScentToBoard = (board, { x, y }) =>
-  ({ ...board, safePlaces: board.safePlaces.concat({ x, y }) })
+const addScentToWorld = (world, { x, y }) =>
+  ({ ...world, safePlaces: world.safePlaces.concat({ x, y }) })
 
 const addFallenStatus = position =>
   ({ ...position, isFallen: true })
 
-const isASafePosition = (board, position) =>
-  board.safePlaces.find(isSamePosition(position))
+const isASafePosition = (world, position) =>
+  world.safePlaces.find(isSamePosition(position))
 
-const applyFallEffect = (board, nextPosition) =>
-  isASafePosition(board, nextPosition)
-    ? { board, nextPosition }
-    : { board: addScentToBoard(board, nextPosition), nextPosition: addFallenStatus(nextPosition) }
+const applyFallEffect = (world, position) =>
+  isASafePosition(world, position)
+    ? { world, position }
+    : { world: addScentToWorld(world, position), position: addFallenStatus(position) }
 
 const isFallingPosition = ({ topX, topY }, { x, y }) =>
   x > topX || y > topY || x < 0 || y < 0
 
-const apply = (board, lastPosition, nextPosition) =>
-  isFallingPosition(board, nextPosition) ? applyFallEffect(board, lastPosition) : { board, nextPosition }
+const apply = (world, lastPosition, position) =>
+  isFallingPosition(world, position) ? applyFallEffect(world, lastPosition) : { world, position }
 
 module.exports = {
   isFallingPosition,

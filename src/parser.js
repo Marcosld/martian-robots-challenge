@@ -1,32 +1,28 @@
 const parseActions = line => line.split('')
 
 const parsePosition = line => {
-  const data = line.split(' ')
-  const [ x, y ] = data.map(numString => parseInt(numString))
-  const [ dir ] = data.slice(-1)
-  return { x, y, dir }
+  const [ x, y, dir ] = line.split(' ')
+  return { x: parseInt(x), y: parseInt(y), dir }
 }
 
-const parseRobot = (positionLine, actionsLine) =>
+const parseRobot = ([ positionLine, actionsLine ]) =>
   ({ position: parsePosition(positionLine), actions: parseActions(actionsLine) })
 
-const isRobotStartingLine = lineNumber => lineNumber % 2 === 0
+const buildRobots = (robotLines, robots = []) =>
+  robotLines.length >= 2
+    ? buildRobots(robotLines.slice(2), robots.concat(parseRobot(robotLines)))
+    : robots
 
-const buildRobots = lines =>
-  lines.reduce((builtRobots, line, i) =>
-    isRobotStartingLine(i) ? builtRobots.concat(parseRobot(line, lines[i + 1])) : builtRobots
-  , [])
-
-const buildBoard = line => {
+function buildWorld(line) {
   const [ topX, topY ] = line.split(' ').map(numString => parseInt(numString))
   return { topX, topY, safePlaces: [] }
 }
 
 function parse(input) {
-  const lines = input.split('\n').filter(line => line !== '')
-  const board = buildBoard(lines[0])
+  const lines = input.trim().split('\n')
+  const world = buildWorld(lines[0])
   const robots = buildRobots(lines.slice(1))
-  return { board, robots }
+  return { world, robots }
 }
 
 module.exports = {

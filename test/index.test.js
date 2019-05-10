@@ -8,6 +8,6 @@ describe('processInput', () => {
   test('should be able to process sample input', async () => {
     const actual = await fs.readFile(getFixture('sampleInput.txt'), 'utf-8')
     const expected = await fs.readFile(getFixture('sampleOutput.txt'), 'utf-8')
-    expect(expected).toMatch(processInput(actual))
+    expect(processInput(actual)).toEqual(expected.trim())
   })
 })

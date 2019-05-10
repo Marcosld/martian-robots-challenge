@@ -1,10 +1,10 @@
 const { parse } = require('../src/parser')
 const exampleInput = '5 3\n1 1 E\nRFRFRFRF\n3 2 N\nFRRFLLFFRRFLL\n0 3 W\nLLFFFLFLFL'
 
-test('Should be able to produce a board from input', () => {
+test('Should be able to produce a world from input', () => {
   expect(parse(exampleInput))
     .toEqual(expect.objectContaining({
-      board: {
+      world: {
         topX: 5,
         topY: 3,
         safePlaces: []
