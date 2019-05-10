@@ -2,7 +2,8 @@ const { parse } = require('../src/parser')
 const { executeInstructions } = require('../src/executor')
 const { positionToLine } = require('../src/reporter')
 
-const getActualWorld = (startingWorld, [lastState]) => lastState ? lastState.world : startingWorld
+const getActualWorld = (startingWorld, [lastState]) =>
+  lastState ? lastState.world : startingWorld
 
 function processInput(input) {
   const { world, robots } = parse(input)
