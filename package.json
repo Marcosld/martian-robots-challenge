@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest test",
     "test:dev": "jest test --watch",
-    "lint": "eslint src test"
+    "lint": "eslint src test",
+    "martian-robots": "martian-robots"
   },
   "author": "Marcos Luis Delgado",
   "license": "MIT",
@@ -18,6 +19,9 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.8.0"
+  },
+  "bin": {
+    "martian-robots": "./src/bin/index.js"
   },
   "engines": {
     "node": ">=10.0.0",

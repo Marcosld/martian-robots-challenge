@@ -3,8 +3,17 @@ Martian Robots problem solved trying to follow the principles of Functional Prog
 
 ## How to
 
-This project doesnt have any dependencies (except to run the tests). It expects input as an String.
-Here is an example usage:
+This project doesnt have any dependencies (except to run the tests). **Node version should be >= 10**
+
+#### CLI Usage
+
+We have two options here. Either we can run it from `package.json`, using 
+`npm run martian-robots -- <input_file_path>` or we can run `npm link` and use it direcly as
+`martian-robots <input_file>`
+
+#### Programmatic Usage
+
+It expects input as an String. Here is an example:
 
 ```javascript
 const fs = require('fs')
@@ -15,14 +24,10 @@ console.log(
 )
 ```
 
-To run the tests we should run first
-```bash
-npm i
-```
-as they make usage of [jest](https://jestjs.io/). After installing the packages we can run
-```bash
-npm test
-```
+#### Running the tests
+
+To run the tests we should install required packages first with `npm i`,
+as project makes usage of [jest](https://jestjs.io/). After installing the packages we can simply run `npm test`.
 
 If you want to run the tests over different I/O files, you can simply change 
 [sampleInput](./test/fixtures/sampleInput.txt) and 
