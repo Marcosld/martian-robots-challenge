@@ -5,13 +5,13 @@ Martian Robots problem solved trying to follow the principles of Functional Prog
 
 This project doesnt have any dependencies (except to run the tests). **Node version should be >= 10**
 
-#### CLI Usage
+### CLI Usage
 
 We have two options here. Either we can run it from `package.json`, using 
 `npm run martian-robots -- <input_file_path>` or we can run `npm link` and use it direcly as
 `martian-robots <input_file>`
 
-#### Programmatic Usage
+### Programmatic Usage
 
 It expects input as an String. Here is an example:
 
@@ -24,7 +24,7 @@ console.log(
 )
 ```
 
-#### Running the tests
+### Running the tests
 
 To run the tests we should install required packages first with `npm i`,
 as project makes usage of [jest](https://jestjs.io/). After installing the packages we can simply run `npm test`.
