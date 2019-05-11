@@ -2,18 +2,15 @@ const { parse } = require('../src/parser')
 const { executeInstructions } = require('../src/executor')
 const { positionToLine } = require('../src/reporter')
 
-const getUpdatedWorld = (initialWorld, [{ world } = { world: initialWorld }]) => world
+const getFinalPositions = ({ world, position = [] }, [ robot, ...nextRobots ]) =>
+  robot
+    ? [].concat(position, getFinalPositions(executeInstructions(world, robot), nextRobots))
+    : [position]
 
 function processInput(input) {
   const { world, robots } = parse(input)
-  return robots
-    .reduce((executedRobots, robot) =>
-      executedRobots.concat(executeInstructions(
-        getUpdatedWorld(world, executedRobots.slice(-1)), // Recursive solution was uglier :/
-        robot
-      ))
-    , [])
-    .map(({ position }) => positionToLine(position))
+  return getFinalPositions({ world }, robots)
+    .map(positionToLine)
     .join('\n')
 }
 
